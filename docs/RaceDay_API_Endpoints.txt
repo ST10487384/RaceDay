@@ -1,0 +1,222 @@
+RACEDAY API ENDPOINT PLAN
+==========================
+
+1. AUTHENTICATION ENDPOINTS
+-----------------------------
+
+Method: POST
+Route: /api/auth/register
+Description: Register a new user account
+Role Required: Public
+Request Body: { firstName, lastName, email, password, role }
+Expected Response:
+  201 - Created user object
+  400 - Validation error
+  409 - Email already taken
+
+Method: POST
+Route: /api/auth/login
+Description: Log in and receive a JWT token
+Role Required: Public
+Request Body: { email, password }
+Expected Response:
+  200 - OK JWT token
+  401 - Invalid credentials
+
+2. USER PROFILE ENDPOINTS
+--------------------------
+
+Method: GET
+Route: /api/users/profile
+Description: Get the logged-in user's profile
+Role Required: Any logged in user
+Request Body: None
+Expected Response:
+  200 - OK user profile
+  401 - Unauthorised
+
+Method: PUT
+Route: /api/users/profile
+Description: Update the logged-in user's profile details
+Role Required: Any logged in user
+Request Body: { firstName, lastName, phoneNumber }
+Expected Response:
+  200 - OK updated profile
+  400 - Validation error
+  401 - Unauthorised
+
+3. CATEGORY ENDPOINTS
+----------------------
+
+Method: GET
+Route: /api/categories
+Description: Get all event categories
+Role Required: Public
+Request Body: None
+Expected Response:
+  200 - OK list of categories
+
+Method: POST
+Route: /api/categories
+Description: Create a new event category
+Role Required: Organiser
+Request Body: { categoryName, description }
+Expected Response:
+  201 - Created new category
+  400 - Validation error
+  403 - Forbidden
+
+Method: PUT
+Route: /api/categories/{id}
+Description: Update an existing category
+Role Required: Organiser
+Request Body: { categoryName, description }
+Expected Response:
+  200 - OK updated category
+  404 - Not found
+  403 - Forbidden
+
+Method: DELETE
+Route: /api/categories/{id}
+Description: Delete a category
+Role Required: Organiser
+Request Body: None
+Expected Response:
+  200 - OK deleted
+  404 - Not found
+  403 - Forbidden
+
+4. EVENT ENDPOINTS
+-------------------
+
+Method: GET
+Route: /api/events
+Description: Get all upcoming events
+Role Required: Public
+Request Body: None
+Expected Response:
+  200 - OK list of events
+
+Method: GET
+Route: /api/events/{id}
+Description: Get details of a specific event
+Role Required: Public
+Request Body: None
+Expected Response:
+  200 - OK event object
+  404 - Not found
+
+Method: POST
+Route: /api/events
+Description: Create a new event
+Role Required: Organiser
+Request Body: { eventName, eventDate, location, distance, categoryID, maxParticipants, routeDescription }
+Expected Response:
+  201 - Created event object
+  400 - Validation error
+  403 - Forbidden
+
+Method: PUT
+Route: /api/events/{id}
+Description: Update an existing event
+Role Required: Organiser
+Request Body: { eventName, eventDate, location, distance, status }
+Expected Response:
+  200 - OK updated event
+  404 - Not found
+  403 - Forbidden
+
+Method: DELETE
+Route: /api/events/{id}
+Description: Delete an event
+Role Required: Organiser
+Request Body: None
+Expected Response:
+  200 - OK deleted
+  404 - Not found
+  403 - Forbidden
+
+5. ENROLMENT ENDPOINTS
+-----------------------
+
+Method: POST
+Route: /api/events/{id}/enrol
+Description: Participant enrols in an event
+Role Required: Participant
+Request Body: None
+Expected Response:
+  201 - Created enrolment
+  409 - Already enrolled
+  400 - Event full
+  403 - Forbidden
+
+Method: GET
+Route: /api/events/{id}/enrolments
+Description: Get all enrolments for a specific event
+Role Required: Organiser
+Request Body: None
+Expected Response:
+  200 - OK list of enrolments
+  403 - Forbidden
+  404 - Not found
+
+Method: GET
+Route: /api/users/enrolments
+Description: Get the logged-in participant's enrolments
+Role Required: Participant
+Request Body: None
+Expected Response:
+  200 - OK list of enrolments
+  401 - Unauthorised
+
+Method: DELETE
+Route: /api/enrolments/{id}
+Description: Cancel an enrolment
+Role Required: Participant
+Request Body: None
+Expected Response:
+  200 - OK cancelled
+  404 - Not found
+  403 - Forbidden
+
+6. RESULTS ENDPOINTS
+---------------------
+
+Method: POST
+Route: /api/enrolments/{id}/result
+Description: Capture a result for a participant's enrolment
+Role Required: Organiser
+Request Body: { finishTime, positionOverall, positionCategory, notes }
+Expected Response:
+  201 - Created result
+  404 - Enrolment not found
+  409 - Result already exists
+  403 - Forbidden
+
+Method: GET
+Route: /api/events/{id}/results
+Description: Get all results for a specific event
+Role Required: Public
+Request Body: None
+Expected Response:
+  200 - OK list of results
+  404 - Not found
+
+Method: GET
+Route: /api/users/results
+Description: Get the logged-in participant's personal results history
+Role Required: Participant
+Request Body: None
+Expected Response:
+  200 - OK results list
+  401 - Unauthorised
+
+Method: PUT
+Route: /api/enrolments/{id}/result
+Description: Update an existing result
+Role Required: Organiser
+Request Body: { finishTime, positionOverall, positionCategory, notes }
+Expected Response:
+  200 - OK updated result
+  404 - Not found
+  403 - Forbidden
