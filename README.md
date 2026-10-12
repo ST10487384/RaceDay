@@ -1,4 +1,4 @@
-# RaceDay - Race Event Management System
+# RaceDay - Race Event Management System - PART II
 
 ## System Description
 RaceDay is a web-based race event management system that allows Organisers to create and manage race events, and Participants to browse and enrol in those events. The system handles everything from event creation and category management to participant enrolments and race results.

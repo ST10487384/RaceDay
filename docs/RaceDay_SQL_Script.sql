@@ -1,6 +1,6 @@
 -- ============================================
--- RaceDay Database Script
--- Part 1 - System Planning and Database
+-- RaceDay Database Script - Part II
+-- System Planning and Database
 -- ============================================
 
 -- Create the database
