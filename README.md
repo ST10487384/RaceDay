@@ -1,4 +1,4 @@
-# RaceDay API (Part 2)
+# RaceDay API (Part 3)
 
 This project implements the Part 2 RESTful API for the RaceDay event management system. It includes:
 
